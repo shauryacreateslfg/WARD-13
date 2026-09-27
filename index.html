@@ -9,29 +9,120 @@
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
 </head>
 <body class="bg-[#edeae0] text-[#1a1a1a] min-h-screen" id="body">
-    <div id="ov-scanlines" class="scanlines fixed inset-0 pointer-events-none" styles="z-index:900"></div>
+    <div id="ov-scanlines" class="scanlines fixed inset-0 pointer-events-none" style="z-index:900"></div>
     <div id="ov-vignette" class="vignette-normal fixed inset-0 pointer-events-none transition-all duration-[1200ms]" style="z-index:901"></div>
     <div id="ov-blood" class="fixed inset-0 pointer-events-none opacity-0 bg-[#4a0000]" style="z-index: 902; transition:opacity 0.07s"></div>
     <div id="ov-white" class="fixed inset-0 pointer-events-none opacity-0 bg-white" style="z-index: 903; transition:opacity 0.04s"></div>
 
     <div id="shadow" class="fixed bottom-0 pointer-events-none select-none opacity-0" style="right:-140px; z-index:800; transition:opacity 0.8s ease, right 1.4s ease-in;">
-        <pre class="text-[#080808] leading-[1.1] text-[0.52rem] drop-shadow-[0_0_px_rgba (0,0,0,0,95)]">
+        <pre class="text-[#080808] leading-[1.1] text-[0.52rem] drop-shadow-[0_0_px_rgba (0,0,0,0.95)]">
              ██
- ████
-  ██
- █  █
- █  █
-██  ██
-█    █
-█    █
- █  █
-  ██
+            ████
+             ██
+            █  █
+            █  █
+           ██  ██
+           █    █
+           █    █
+            █  █
+             ██
         </pre>
     </div>
 
     <div id="glitch-bar" class="fixed left-0 right-0 opacity-0 pointer-events-none" style="height:3px; background: rgba(180,255,180,0.35); top:30%; z-index:950;"></div>
     <div id="pg-landing" class="min-h-screen flex flex-col">
-        <div class="bg-[#1e3a1e text-[#9ec49e] px-6 py-1.5 flex justify-between items-center]"
+        <div class="bg-[#1e3a1e] text-[#9ec49e] px-6 py-1.5 flex justify-between items-center" style="font-family:'Share Tech Mono' ,monospace;font-size:11px; letter-spacing:0.1rem; " >
+            <span>ST. MAREN'S GENERAL HOSPITAL</span>
+            <span id="clock" class="text-[#c0ffc0]">--:--:--</span>
+            <span>PATIENT SERVICES - NIGHT PORTAL</span>
+
+        </div>
+    <div class="bg-[#dddacf] border-b-2 border-[#aaa89a] px-8 py-5 flex items-center gap-5">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+            <rect x="18" y="2" width="14" height="46" fill="#1e3a1e"/>
+            <rect x="2" y="18" width="46" height="14" fill="#1e3a1e"/>
+        </svg>
+        <div>
+            <h1 style="font-family: 'Special Elite' , cursive ; font-size:1.45rem; color:#1e3a1e ; line-height:1.2;">St. Maren's General Hospital</h1>
+            <p class="text-[#777] mt-1" style="font-size:11px; letter-spacing:0.04em;">Established 1947 &nbsp;·&nbsp; Ward 13 Night Annex &nbsp;·&nbsp; After-Hours Admissions</p>
+
+        </div>
+        <div class="ml-auto text-right" style="font-family:'Share Tech Mono',monospace; font-size:11px; color:#888;">
+            <div id="intake-num" class="text-[#1e3a1e] mb-0.5" style="font-size:13px;">Intake #-</div>
+            <div>Please proceed when ready</div>
+        </div>
     </div>
+    <main class="flex-1 flex items-center justify-center p-8">
+        <div class="max-w-md w-full">
+            <div class="bg-white border border-[#ccc] p-8 shadow-sm">
+                <p class="text-[#999] border-b border-[#eee] pb-4 mb-5" style="font-family:'Share Tech Mono' , monospace; font-size:10px; letter-spacing:0.1em;">
+                    NIGHT ADMISSIONS - FORM ST-13B - READ BEFORE PROCEEDING
+                </p>
+
+                <h2 style="font-family:'Special Elite',cursive; font-size:1.2rem; color:#1a1a1a; margin-bottom:1rem; line-height:1.35;">
+                    Welcome to the Patient Intake System
+                </h2>
+
+                <p class="text-[#444] text-sm leading-relaxed mb-3">
+                   You have been directed here by a St. Maren's night admissions coordinator. 
+                   Complete all fields accurately - your responses are reviewed by on-call
+                   staff before you're assigned to a ward.
+                </p>
+
+                <p class="text-[#444] text-sm leading-relaxed mb-5">
+                    This takes around <strong>3-5 minutes</strong>.
+                    Do not close this window once you've started.
+                </p>
+
+                <div class="bg-[#f5f5ea]  border border-[#d5d5aa] px-4 py-3 mb-7" style="font-size:11px; color:#666; line-height:1.7;">
+                     ⚠ &nbsp;Night admissions are for scheduled patients only. If you came in through emergency, please return to the front desk and tell them Ward 13 sent you here by mistake.
+                </div>
+
+                <button id="begin-btn" onclick="ward.begin()" class="w-full bg-[#1e3a1e] text-[#a8cca8] py-3 hover:bg-[#162e16] transition-colors" style="font-family: 'Special Elite', cursive; font-size:1rem; letter-spacing:0.12em;">
+                    Begin Intake
+                </button>
+
+                <p class="text-center text-[#ccc] mt-3" style="font-family:'Share Tech Mono', monospace; font-size:10px;">
+                    By proceeding you confirm you have been admitted to this facility.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center text-[#bbb] py-3 border-t border-[#ddd]" style="font-family:'Share Tech Mono', monospace; font-size:10px;">
+        St. Maren's Patient Portal &nbsp;·&nbsp; For assistance: ext. 0013 &nbsp;·&nbsp; Do not refresh this page
+    </footer>
+</div>
+
+<div id="pg-form" class="hidden min-h-screen flex flex-col">
+    <div id="form-bar" class="bg-[#1e3a1e] text-[#9ec49e] px-6 py-1.5 flex justify-between items-center" style="font-family:'Share Tech Mono ', monospace; font-size:11px; letter-spacing:0.1em;">
+        <span>ST. MAREN'S GENERAL HOSPITAL</span>
+        <span id="clock2" class="text-[#c0ffc0]">--:--:--</span>
+        <span>FORM STATUS: <span id="form-status" class="text-white">IN PROGRESS</span></span>
+    </div>
+
+    <div class="flex-1 max-w-2x1 mx-auto w-full px-4 py-8">
+        <div class="flex justify-between items-start mb-5">
+            <div>
+                <h2 id="form-heading" style="font-family:'Special Elite', cursive; font-size:1.5rem; color:#1a1a1a;">Patient Intake Form</h2>
+                <p class="text-[#999] mt-1" style="font-family:'Share Tech Mono',monospace; font-size:10px;">Ward 13 Night Admissions - Form ST-13b</p>
+            </div>
+            <div class="text-right" style="font-family:'Share Tech Mono', monospace; font-size:10px; color:#999;">
+                <div id="form-intake-num" class="text-[#1e3a1e] mb-0.5" style="font-size:13px;"></div>
+                <div id="form-date"></div>
+            </div>
+        </div>
+
+        <div class="w-full bg-[#ddd] mb-8" style="height:2px;">
+            <div id="pbar" style="height:2px; width:0%; background:#1e3a1e; transition: width 0.8s ease, background 1.2 ease;"></div>
+        </div>
+
+        <div class="ward-step" id="s0">
+            <label class="flabel">Full legal name</label>
+            <input id="f-name" type="text" placeholder="e.g. Jane Doe" class="finput " />
+            <p class="fhint">As it appears on your identification.</p>
+            <button class="fbtn step-next" data-next="1">Continue</button>
+        </div>
+</div>
 </body>
 </html>
