@@ -270,7 +270,7 @@ const ward =(() => {
         if (!container) return;
         
         const lines =[
-            { t: 0,txt: `Form ST-13B — processing complete.` },
+            { t: 0,txt:`Form ST-13B — processing complete.` },
             { t: 1800,txt: `Patient: ${S.name}` },
             { t: 3200,txt: `DOB: ${S.dob}` },
             { t: 4400,txt: `Reason for visit: ${S.reason}` },
@@ -299,8 +299,48 @@ const ward =(() => {
             },t);
         });
 
-        
+        startTitleCycle();
+        setTimeout(() => body.classList.add('tinge-dark'), 8000);
 
-
+        setTimeout(()=> {
+            flicker(() =>{
+                showJumpscare(FACES[FACES.length - 1], () => {
+                    $('pg-form').classList.add('hidden');
+                    $('pg-end').classList.remove('hidden');
+                    $('ov-vignette').className='fixed inset-0 z-[901] pointer-events-none vignette-black transition-all duration-1000';
+                    loadEndScreen();
+                },2000);
+            });
+        },18000);
     }
+    
+    function loadEndScreen() {
+        $('end-head').textContent='Admission Complete';
+        $('end-body').textContent
+          `your records have been transferred to the permanent ward. ` + 
+          `St. Maren's thanks you for your cooperation. `+
+          `Pleasee do not attempt to contact your next of kin.`;
+
+        const rec=$('end-record');
+        [
+            ['Name', S.name],
+            ['Date of birth',S.dob],
+            ['Reason for Visit', S.reason || 'Unknown'],
+            ['Next of Kin',`${S.contact} (${S.relation})`],
+            ['Prior Visits',S.history === 'yes' ? 'yes , records retrieved' : S.history === 'no' ? 'First visit logged' : 'Records found regardless'],
+            ['Ward Assigned','13-B (Permanent)'],
+            ['Discharge Date','N/A'],
+            ['Status', '◼ DECEASED — Processing'],
+        ].forEach(([k,v]) => {
+            const row = document.createElement('div');
+            row.className='flex gap-3 border-b border-[#1a1a1a] pb-1.5';
+            row.innerHTML= `<span style="color:#444;width:130px;flex-shrink:0;font-size:11px">${k}</span><span style="color:#666;font-size:11px">${v}</span>`;
+            rec.appendChild(row);        
+        });
+
+        SFX.subThud();
+        setTimeout(()=> SFX.whisper(0.2),2000);
+    }
+
+    
 })
