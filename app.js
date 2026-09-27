@@ -149,4 +149,158 @@ const ward =(() => {
          }
     }
     
+    function step1Horror(){
+        setProgress(18, 'normal');
+        SFX.chime();
+        showStep(1);
+        setTimeout(() => {
+            const hint =$('dob-hint');
+            if (hint) typeCorruptThenFix(hint,`we already have your date of birth on file, ${S.name}.`);
+        },2200);
+    }
+
+    function step2Horror() {
+        setProgress(36, 'normal');
+        showStep(2);
+        setTimeout(() =>{
+            const f = $('f-dob');
+            if (!f) return;
+            SFX.staticBurst(0.12,0.08);
+            const orig = f.value;
+            f.classList.add('input-writhe');
+            f.value = corruptStr(orig);
+            setTimeout(() => {
+                f.value = orig;
+                f.classList.remove('input-writhe');
+            },2000);
+        },1000);
+    }
+
+    function step3Horror() {
+        setProgress(52,'normal');
+        SFX.bpCuff();
+        showStep(3);
+        setTimeout(() =>{
+            const hint=$('contact-hint');
+            if (hint) typeCorruptThenFix(hint,`They will be told you can't come home.`);
+        },3000);
+        setTimeout(startNurseFeed,2500);
+    }
+
+    function step4Horror() {
+        setProgress(68, 'warning');
+        showStep(4);
+        SFX.heartbeat(2, true);
+        setTimeout(() => {
+            SFX.phoneRing(2);
+            setTimeout(() =>{
+                appendNurse(`someone just called the ward desk asking for you.They wouldn't leave their name.`,'danger');
+                SFX.whisper();
+            },3800);   
+        },2000);
+
+        setTimeout(() =>{
+            const unsure=$('opt-unsure');
+            if(unsure) {
+                const lbl =unsure.querySelector('input + *') || unsure;
+                setTimeout(() => typeCorruptThenFix(lbl.lastChild || lbl, `I think i have been here before`),3000);
+            }
+        }, 1500);
+    }
+
+    function step5Horror() {
+        setProgress(82,'danger');
+        showStep(5);
+        body.classList.add('dim-pulse');
+        $('ov-vignette').className = 'fixed inset-0 z-[901] pointer-events-none vignette-danger transition-all duration-1000';
+       
+        setTimeout(() => {
+            const lbl =$('s5-label');
+            if (lbl) typeCorruptThenFix(lbl,`Confirm you're ${S.name}`);
+            
+        }, 600);
+
+        setTimeout(() =>{
+            const f=$('f-confirm');
+            if (!f) return;
+            f.value = ''; f.placeholder= '';
+            SFX.staticBurst(0.18,0.15);
+            typeIntoField(f, corruptStr(S.name), () => {
+                f.classList.add('input-writhe');
+                setTimeout(() => {
+                    SFX.staticBurst(0.1,0.08);
+                    f.value =S.name;
+                    f.classList.remove('input-writhe');
+                    setTimeout(() =>showStaffNote(
+                        `Patient: ${S.name} · DOB: ${S.dob}\n` +
+                        `Prior admission record found. Date of prior admission: the night of ${S.dob}.\n` +
+                        `Status on discharge: [REDACTED]\n` +
+                        `Ward 13 assigned. Contact ${S.contact} (${S.relation}) — notification DECLINED.\n` +
+            
+                        `Note from duty nurse: "Do not let this one leave."`
+
+                    ),1200);
+                },1800);
+            });
+        },2000);
+    }
+
+    function showStaffNote(text) {
+        const box =$('staff-note'), el= $('staff-note-text');
+        if (!box || !el) return;
+        box.classList.remove('hidden') ;
+        el.textContent = '';
+        SFX.creak();
+        typeText(el, text,22,() => {
+            body.classList.add('tinge-red');
+            scheduleJumpscare(3500);
+        });
+    }
+
+    function  finalSequence() {
+        setProgress(100, 'danger');
+        showStep(6);
+        SFX.flatline(3);
+        stopNurseFeed();
+
+        const feed=$('nurse-feed');
+        if (feed) feed.classList.add('hidden');
+
+        const container =$('final-lines');
+        if (!container) return;
+        
+        const lines =[
+            { t: 0,txt: `Form ST-13B — processing complete.` },
+            { t: 1800,txt: `Patient: ${S.name}` },
+            { t: 3200,txt: `DOB: ${S.dob}` },
+            { t: 4400,txt: `Reason for visit: ${S.reason}` },
+            { t: 5800,txt: `` },
+            { t: 6200,txt: `Ward 13 has been expecting you, ${S.name}.`,red: true },
+            { t: 7800,txt: `` },
+            { t: 8200,txt: `${S.contact} was informed.`, red: true },
+            { t: 9400,txt: `They did not respond.`, red: true },
+            { t: 11000,txt: `` },
+            { t: 11400,txt: `This is your admission.`,red: true },
+            { t: 13000,txt: `It is not your first.`, red: true },
+            { t: 14800,txt: `` },
+            { t: 15200,txt: `Do not try to leave.`,bold: true, red: true },
+
+        ];
+
+        lines.forEach(({t,txt,red,bold}) =>{
+            setTimeout(() => {
+                if (!txt) { container.appendChild(document.createElement('br')); return;}
+                const p= document.createElement('p');
+                if (red) p.style.color ='#8b0000';
+                if(bold) p.style.fontWeight='bold';
+                container.appendChild(p);
+                typeText(p, txt, 30);
+                if(red) SFX.staticBurst(0.08,0.06);
+            },t);
+        });
+
+        
+
+
+    }
 })
