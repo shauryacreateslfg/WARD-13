@@ -119,10 +119,85 @@
 
         <div class="ward-step" id="s0">
             <label class="flabel">Full legal name</label>
-            <input id="f-name" type="text" placeholder="e.g. Jane Doe" class="finput " />
+            <input id="f-name" type="text" placeholder="e.g. Harvey Reginald Specter" class="finput " />
             <p class="fhint">As it appears on your identification.</p>
             <button class="fbtn step-next" data-next="1">Continue</button>
         </div>
+
+        <div class="ward-step hidden" id="s1">
+            <label class="flabel">Date of birth</label>
+            <input id="f-dob" type="text" placeholder="DD / MM / YYYY" class="finput" />
+            <p class="fhint" id="dob-hint">We need this to locate any existing records.</p>
+            <button class="fbtn step-next" data-next="2">Continue</button>
+        </div>
+
+        <div class="ward-step hidden" id="s2">
+            <label class="flabel">Reason for visit</label>
+            <textarea id="f-reason" rpws="4" placeholder="Briefly describe your symptoms or reason for admission." class="finput" style="resize:none;"></textarea>
+            <button class="fbtn step-next" data-next="3">Continue</button>
+        </div>
+
+        <div class="ward-step hidden" id="s3">
+            <label class="flabel" >Emergency contact - full name</label>
+            <input id="f-contact" type="text" placeholder="Full name of next kin" class="finput mb-4" />
+            
+            <label class="flabel">Their relationship to you</label>
+            <input id="f-relation" type="text" placeholder="e.g. Mother,Spouse,Friend" class="finput" />
+
+            <p class="fhint" id="contact-hint">They will be notified once you are admitted.</p>
+            <button class="fbtn step-next" data-next="4">Continue</button>
+        </div>
+
+        <div class="ward-step hidden" id="s4">
+            <label class="flabel" style="margin-bottom:12px; display:block;">Have you visited this hospital before?</label>
+            <div class="flex flex-col gap-3 mb-6">
+                <label class="flex items-center gap-3 text-sm text-[#333] cursor-pointer">
+                    <input type="radio" name="hist" value="no" class="w-4 h-4 accent-[#1e3a1e]" /> Neh.
+                </label>
+                <label class="flex items-center gap-3 text-sm text-[#333] cursor-pointer">
+                    <input type="radio" name="hist" value="yes" class="w-4 h-4 accent-[#1e3a1e]" /> Yea.
+                </label>
+                <label class="flex items-center gap-3 text-sm text-[#333] cursor-pointer" id="opt-unsure">
+                    <input type="radio" name="hist" value="unsure" class="w-4 h-4 accent-[#1e3a1e]" /> idk.
+                </label>
+            </div>
+            <button class="fbtn step-next" data-next="5">Continue</button>
+        </div>
+
+        <div class="ward-step hidden" id="s5">
+            <label class="flabel" id="s5-label">Please confirm your name to continue</label>
+            <input id="f-confirm" type="text" placeholder="Your name.." class="finput" autocomplete="off" />
+            <div id="staff-note" class="hidden mt-5 pl-4 py-3 border-1-4 border-[#8b0000]">
+                <p class="text-[#8b0000] mb-2" style="font-family:'Share Tech Mono', monospace; font-size:10px; letter-spacing:0.08em;">- AUTOMATED STAFF NOTE -</p> 
+                <p id="staff-note-text" class="text-[#222] text-sm leading-relaxed"></p>
+            </div> 
+
+            <button class="fbtn step-next mt-6" data-next="6">Continue</button>
+        </div>
+
+        <div class="ward-step hidden" id="s6">
+            <div id="final-lines" class="text-sm leading-loose text-[#333]" style="font-family:'Share Tech Mono',monospace;"></div>
+        </div>
+
+        <div id="nurse-feed" class="hidden mt-8 pt-6 border-t border-[ddd]">
+            <p class="text-[#bbb] mb-3" style="font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:0.08em;">- ON-CALL STAFF COMMUNICATIONS -</p>
+            <div id="nurse-msgs" class="space-y-3 overflow-y-auto pr-1" style="max-height:220px;"></div>
+        </div>
+        <footer class="text-center text-[#bbb] py-3 border-t border-[#ddd] mt-auto" style="font-family:'Share Tech Mono',monospace;font-size:10px;">
+        Data encypted &nbsp;·&nbsp; Ward 13 Annex &nbsp;;·&nbsp; If the form stops responding, remain calm.
+        </footer>
+    </div>
+
+    <div id="pg-end" class="hidden fixed inset-0 bg-[#060606] flex items-center justify-center p-8" style="z-index:500;">
+        <div class="max-w-md w-full text-center" id="end-inner" style="animation: end-fade 1.6s ease-out 0.5s both;">
+            <svg width="38" height="38" viewbox="0 0 50 50" fill="none" class="mx-auto mb-6 opacity-50">
+                <rect x="18" y="2" width="14" height="46" fill="#8b0000"/>
+                <rect x="2" y="18" width="46" height="14" fill="#8b0000"/>
+            </svg>
+            
+        </div>
+    </div>
+
 </div>
 </body>
 </html>
