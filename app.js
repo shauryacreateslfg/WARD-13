@@ -112,4 +112,41 @@ const ward =(() => {
         const inp =$(`s${n}`)?.querySelector('input,textarea');
         if (inp) setTimeout(() => inp.focus(), 120);
     }
+
+    function advance(next) {
+        const validators ={
+            0:() => {S.name=$('f-name')?.value.trim(); return!!S.name;},
+            1:() =>{S.dob=$('f-dob')?.value.trim(); return!!S.dob;},
+            2:() =>{S.reason =$('f-reason')?.value.trim(); return!!S.reason;},
+            3:() =>{S.contact=$('f-contact')?.value.trim(); 
+                S.relation=$('f-relation')?.value.trim();
+                return!!(S.contact && S.relation);
+            },
+            4: () => {S.history= document.querySelector('input[name="hist"]:checked')?.value || ''; return!!S.history; },
+            5: () => true,
+         };
+
+         if (!(validators[S.step]?.())) {
+            shakeStep();
+            SFX.staticBurst(0.2,0.1);
+            return;
+         }
+
+         const hooks = {
+            1: step1Horror,
+            2: step2Horror,
+            3: step3Horror,
+            4: step4Horror,
+            5: () => {step5Horror(); return; },
+            6: () => {finalSequence(); return; },
+         };
+
+         const fn = hooks[next];
+         if (fn) {
+            fn();
+         } else {
+            showStep(next);
+         }
+    }
+    
 })
