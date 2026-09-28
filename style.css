@@ -116,3 +116,38 @@ body.dim-pulse{ animation: dim-pulse 3.5s ease-in-out infinite;}
     100% { top:100vh; opacity:0; }
 }
 .bar-sweep {animation: bar-sweep 0.7s linear forwards;}
+
+.shadow-figure-text {
+    font-family: 'Share Tech Mono', monospace;
+    text-shadow: 0 0 8px rgba(0,0,0,0.9);
+}
+
+@keyframes js-flicker-kf {
+    0%,100% {opacity: 1;}
+    33% {opacity: 0.3;}
+    66% {opacity: 0.8;}
+}
+.js-flicker {animation: js-flicker-kf 0.1s step-start infinite;}
+
+@keyframes js-slam {
+    from {transform:scale(0.4); opacity: 0;}
+    to {transform: scale(1); opacity: 1;}
+}
+#js-art{ animation: js-slam 0.08s ease-out forwards;}
+
+@keyframes end-fade{
+    from {opacity:0; transform:translate(20px);}
+    to {opacity:1; transform: none;}
+}
+.end-fade{ animation: end-fade 1.8s ease-out 0.6s both;}
+
+#pbar {background: #1e3a1e; }
+
+@keyframes txt-glitch{
+    0%,100% {clip-path: none; transform: none;}
+    20% { clip-path:inset(0 0 85% 0); transform:translate(-3px,0) skewX(-2deg); }
+    40% { clip-path:inset(55% 0 20% 0); transform:translate(3px,0); }
+    60% { clip-path:inset(25% 0 55% 0); transform:translate(-2px,0) skewX(1deg); }
+    80% { clip-path:inset(80% 0 3% 0);  transform:translate(2px,0); }
+}
+.txt-glitch{animation: txt-glitch 0.35s steps(1 forwards);}
