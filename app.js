@@ -495,6 +495,67 @@ const ward =(() => {
         setTimeout(()=> ov.style.opacity='0',ms);
     }
 
+    function sweepGlitchBar(){
+        const bar=$('glitch-bar');
+        bar.style.top='-4px';
+        bar.style.opacity= '0.7';
+        bar.classList.add('bar-sweep');
+        setTimeout(() => {
+            bar.classList.remove('bar-sweep');
+            bar.style.opacity='0'; 
+        },750);
+    }
 
+    function setProgress(pct,tier='normal'){
+        const pbar=$('pbar');
+        pbar.style.width =pct + '%';
+        if (tier === ' warning') pbar.style.background='#8b6a00';
+        if (tier === 'danger') pbar.style.background='#8b0000';
+
+    }
+
+    function shakeStep(){
+        const s= document.querySelector('.ward-step:not(.hidden)');
+        s?.classList.add('shake');
+        setTimeout(() => s?.classList.remove('shake'),600);
+    }
+
+    function typeText(el,text,speed=30,onDone) {
+        let i = 0; el.textContent='';
+        const timer = setInterval(()=>{
+            el.textContent+= text[i++];
+            if (i>= text.length) {clearInterval(timer); onDone?.();}
+        },speed);
+    }
+
+    function typeIntoField(el,text,onDone){
+        let i= 0;
+        const timer=setInterval(()=>{
+            el.value += text[i++];
+            if (i>= text.length) {clearInterval(timer); onDone?.();}
+        },65);
+    }
+
+    function typeCorruptThenFix(el,finalText){
+        SFX.staticBurst(0.1,0.07);
+        el.textContent=corruptStr(finalText);
+        el.classList.add('txt-glitch');
+        setTimeout(() => {
+            el.textContent= finalText;
+            el.classList.remove('txt-glitch');
+        }, 350);
+    }
+
+    function corruptStr(str){
+        const g= '█▓▒░╬╪╩╦╠║╔╗╚╝▄▀■□▪▫†‡§¶';
+        return str.split('').map(c =>
+            Math.random() <0.45 ? g[Math.floor(Math.random()*g.length)] : c
+        ).join('');
+        
+    }
+
+    function poke() {S.lastInteraction= Date.now(); }
+
+    return{begin,advance,poke};
     
-})
+})();
