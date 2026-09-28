@@ -435,6 +435,65 @@ const ward =(() => {
         }, delay);
     }
 
+    function showJumpscare(face,onEnd,duration = 1000) {
+        const layer=$('js-layer'),art=$('js-art'), txt=$('js-text');
+        art.textContent=face.art;
+        txt.textContent=face.text;
+        layer.classList.remove('hidden');
+        SFX.scream();
+        flashWhite(80);
+        setTimeout(() => {
+            layer.classList.add('hidden');
+            art.textContent='';
+            txt.textContent='';
+            if(onEnd) onEnd(); 
+        },duration);
+    }
+
+    function showShadowFigure(){
+        if(S.figureVisible) return;
+        S.figureVisible=true;
+        const fig=$('shadow');
+
+        fig.style.transition = ' opacity 0.8s ease, right 1.4s ease-in';
+        fig.style.right='-140px';
+        fig.style.opacity='0';
+        requestAnimationFrame(() =>{
+            requestAnimationFrame(()=>{
+                fig.style.opacity='0.12';
+                fig.style.right='-20px';
+            });
+        });
+        SFX.whisper(0.08);
+    }
+
+    function hideShadowFigure() {
+        S.figureVisible=false;
+        const fig =$('shadow');
+        fig.style.opacity='0';
+        fig.style.right ='-120px';
+    }
+
+    function startTitleCycle() {
+        clearInterval(S.titleInterval);
+        S.titleInterval= setInterval(() => {
+            document.title = TITLES[titleIdx++ % TITLES.length];
+        }, 2800);
+    }
+
+    function flicker(cb){
+        body.classList.add('flicker');
+        SFX.staticBurst(0.35,0.4);
+        setTimeout(() => { 
+            body.classList.remove('flicker'); cb?.();
+        },520);
+    }
+
+    function flashWhite(ms=60) {
+        const ov=$('ov-white');
+        ov.style.opacity='1';
+        setTimeout(()=> ov.style.opacity='0',ms);
+    }
 
 
     
