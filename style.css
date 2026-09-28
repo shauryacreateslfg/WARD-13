@@ -151,3 +151,16 @@ body.dim-pulse{ animation: dim-pulse 3.5s ease-in-out infinite;}
     80% { clip-path:inset(80% 0 3% 0);  transform:translate(2px,0); }
 }
 .txt-glitch{animation: txt-glitch 0.35s steps(1 forwards);}
+
+@keyframes title-creep{
+    0%,100% {letter-spacing: 0; filter: none;}
+    50%{letter-spacing: 0.04em;filter: blur(0.4px);}
+}
+.title-creep{animation: title-creep 4s ease-in-out infinite;}
+
+::-webkit-scrollbar {width: 4px;}
+::-webkit-scrollbar-track{background: #f0ede0;}
+::-webkit-scrollbar-thumb{background: #b0ae9a;}
+
+body.tinge-red{ background: #ede0e0 !important;transition: background 2s;}
+body.tinge-dark{background:#1a1a1a !important; transition: background 1.5s;}
