@@ -342,5 +342,100 @@ const ward =(() => {
         setTimeout(()=> SFX.whisper(0.2),2000);
     }
 
+    function startNurseFeed(){
+        const feed= $('nruse-feed');
+        if (!feed ||nurseTimer !== null) return;
+        feed.classList.remove('hidden');
+        queueNextNurse();
+    }
+
+    function stopNurseFeed(){
+        clearTimeout(nurseTimer);
+        nurseTimer= null;
+    }
+    
+    function queueNextNurse(){
+        if(nurseIdx >= Nurse.length) return;
+        const msg=NURSE[nurseIdx++];
+        nurseTimer=setTimeout(() => {
+            const txt =typeof msg.txt =='function'? msg.txt(S) : msg.txt;
+            appendNurse(txt.replace('[DATE]',S.dob || 'unknown'),msg.type);
+            SFX.whisper(0.15);
+            queueNextNurse();
+        }, msg.delay);
+    }
+
+    function appendNurse(text,type='normal'){
+        const msgs =$('nruse-msgs');
+        if (!msgs) return ;
+        const colours ={
+            normal: 'border-[#aaa89a] text-[#555]',
+            warning: 'border-[#9a8000] text-[#665500]',
+            danger:  'border-[#8b0000] text-[#8b0000]',
+        };
+        const div=document.createElement('div');
+        div.className= `nurse-msg border-l-2 pl-3 py-1 ${colours[type] || colours.normal}`;
+        div.innerHTML = `<span style="font-size:10px;color:#bbb;display:block;margin-bottom:2px">Ward Staff — ${new Date().toLocaleTimeString()}</span>`;
+
+        const span= document.createElement('span');
+        span.style.fontSize='13px';
+        span.style.lineHeight='1.6';
+        div.appendChild(span);
+        msgs.appendChild(div);
+        msgs.scrollTop =msgs.scrollHeight;
+        typeText(span,text,20);
+    }
+
+    function startAmbientEvents() {
+        if(S.ambientRunning)  return;
+        S.ambientRunning=true;
+
+        setInterval(() =>{
+            const idle =(Date.now() -S.lastInteraction) > 9000;
+            if (idle && S.step >= 2 && !S.figureVisible) showShadowFigure();
+            if (!idle && S.figureVisible) hideShadowFigure();
+        },1500);
+
+        setInterval(() =>{
+            if(S.step<1) return;
+            const r = Math.random();
+            if(r<0.3) SFX.heartbeat(1,Math.random() <0.4);
+            else if (r<0.5) SFX.staticBurst(0.06,0.08);
+            else if(r<0.6)SFX.whisper(0.08);
+        },1200 + Math.random()*8000);
+
+        setInterval(()=>{
+            if(S.step<2) return;
+            sweepGlitchBar();
+        },18000 + Math.random()*12000);
+
+        setInterval(() =>{
+            if (S.step <3) return;
+            const options =[
+                `${S.name ||'you'} - are you still there?`,
+                `don't look behind you`,
+                `St. Maren's Hospital - Patient Intake`,
+                `She's in the roomwith you`,
+                `St. Maren's Hospital - Patient Intake`,
+            ];
+            document.title=options[Math.floor(Math.random()*options.length)];
+            setTimeout(() => document.title =`St. Maren's Hospital - Patient Intake`,2500);
+        },2500+ Math.random()*15000);
+    }
+
+    function scheduleJumpscare(delay){
+        if (S.scaresLeft <= 0) return;
+        S.scaresLeft--;
+        setTimeout(() => {
+            if (S.step>=6) return;
+            flicker(()=>{
+                const face = FACES[Math.floor(Math.random()*(FACES.length-1))];
+                showJumpscare(face, () => SFX.creak(), 900+Math.random()*400);
+            });  
+        }, delay);
+    }
+
+
+
     
 })
