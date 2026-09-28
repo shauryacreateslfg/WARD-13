@@ -559,3 +559,46 @@ const ward =(() => {
     return{begin,advance,poke};
     
 })();
+
+document.addEventListener('DOMContentLoaded', ()=> {
+    const intakeNum=`13-${Math.floor(Math.random()*9000 + 1000)}`;
+    const $= id => document.getElementById(id);
+
+    $('intake-num').textContent=`Intake #${intakeNum}`;
+    $('form-intake-num').textContent=`Intake #${intakeNum}`;
+    $('form-date').textContent=new Date().toLocaleDateString('en-GB',{
+        day:'2-digit', month:'long',year:'numeric'
+    });
+
+    const tick =() =>{
+        const t = new Date().toLocalTimeString('en-GB', {hour12: false});
+        const c1=$('clock'),c2=$('clock2');
+        if(c1) c1.textContent=t;
+        if(c2) c2.textContent=t;
+    };
+    tick();
+    setInterval(tick,1000);
+
+    document.querySelectorAll('.step-next').forEach(btn =>{
+        btn.addEventListener('click', ()=> ward.advance(parseInt(btn.dataset.next)));
+    });
+
+    document.addEventListener('keydown', e=>{
+        if(e.key ==='Enter') {
+            document.querySelector('.ward-step:not(.hidden) .step-next')?.click();
+        }
+        ward.poke();
+    });
+    document.addEventListener('mousemove', ()=> ward.poke());
+    document.addEventListener('click', ()=> ward.poke());
+
+    document.addEventListener('visibilitychange', ()=> {
+        if(!document.hidden) {
+            const name= $('f-name')?.value?.trim();
+            if (name) {
+                document.title=`${name} - please come back`;
+                setTimeout(() => document.title=`St. Maren's Hospital - Patient Intake`, 3000);
+            }
+        }
+    });
+});
