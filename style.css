@@ -1,0 +1,118 @@
+body { font-family: 'Share Tech Mono', monospace;}
+
+body{
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Cline x1='10' y1='0' x2='10' y2='20' stroke='%231e3a1e' stroke-width='1.5'/%3E%3Cline x1='0' y1='10' x2='20' y2='10' stroke='%231e3a1e' stroke-width='1.5'/%3E%3Ccircle cx='10' cy='10' r='2' fill='%231e3a1e'/%3E%3C/svg%3E") 10 10, crosshair;
+}
+
+.flabel{
+    display: block;
+    font-family: 'Share Tech Mono',monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: #666;
+    margin-bottom: 6px;
+}
+.finput{
+    width: 100%;
+    border: 1px solid #bbb;
+    background: #fff;
+    padding: 10px 14px;
+    font-size: 0.875rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s, background 0.3s, color 0.3s;
+}
+
+.finput:focus{ border-color: #1e3a1e;}
+.fhint {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 6px ;
+    font-family: 'Share Tech Mono', monospace;
+}
+.fbtn {
+    margin-top: 24px;
+    background: #1e3a1e;
+    color: #a8cca8;
+    padding: 10px 24px;
+    font-family: 'Share Tech Mono',monospace;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+
+}
+
+.fbtn:hover {background: #152a15;}
+
+.scanlines {
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0,0,0,0.04) 3px,
+        rgba(0,0,0,0.04) 4px
+    );
+}
+
+.vignette-normal {
+    background: radial-gradient(ellipse at center,transparent 55%, rgba(0,0,0,0.18)100%);
+}
+.vignette-danger{
+    background: radial-gradient(ellipse at center, transparent 35%,rgba(90,0,0,0.45)100%);
+}
+.vignette-black {
+    background: radial-gradient(ellipse at center, transparent 25%, rgba(0,0,0,0.7) 100%);
+}
+
+@keyframes fluoro {
+    0%,86%,90%,94%,100% {opacity: 1;filter: brightness(1);}
+    87%,91% {opacity: 0.82; filter: brightness(0.88);}
+    88%,92% { opacity:0.55; filter:brightness(0.60); }
+    89% { opacity:0.92; filter:brightness(0.95); }
+    93% { opacity:0.70; filter:brightness(0.75); }
+}
+
+body.flicker{ animation: fluoro 0.6s ease-out;}
+
+@keyframes dim-pulse{
+    0%,100%{filter:brightness(1);}
+    50% {filter: brightness(0.88);}
+}
+body.dim-pulse{ animation: dim-pulse 3.5s ease-in-out infinite;}
+
+@keyframes field-writhe{
+    0%,100%{border-color:#bbb ; color:#1a1a1a ; letter-spacing:0 ;}
+    20%{border-color: #8b0000; color:#8b0000 ; letter-spacing: 0.04em;}
+    40%{border-color: #8b0000; background-color: #fff5f5;}
+    60%{border-color: #bbb; color: #1a1a1a; letter-spacing:  -0.02em ;}
+    20%{border-color:#555 ; background:#f5f5f5 ;}
+}
+.input-writhe{ animation: field-writhe 2.2s ease-in-out;}
+
+@keyframes hard-shake{
+    0%,100% { transform:none; }
+    10% { transform:translate(-6px,-2px) rotate(-0.4deg);}
+    20% { transform:translate(6px,2px) rotate(0.4deg); }
+    30% { transform:translate(-4px,3px);}
+    40% { transform:translate(4px,-3px);}
+    50% { transform:translate(-3px,1px) rotate(-0.2deg);}
+    60% { transform:translate(3px,-1px) rotate(0.2deg);}
+    70% { transform:translate(-2px,0px);}
+    80% { transform:translate(2px,0px);}
+}
+.shake { animation: hard-shake 0.55s ease-out;}
+
+@keyframes msg-in {
+    from{ opacity:0; transform:translateY(6px); }
+    to{ opacity:1; transform:none; }
+}
+.nurse-msg{animation: msg-in 0.4s ease-out forwards; opacity: 0;}
+
+@keyframes bar-sweep{
+    0% { top:-4px;  opacity:0.7; }
+    95% { top:100vh; opacity:0.7; }
+    100% { top:100vh; opacity:0; }
+}
+.bar-sweep {animation: bar-sweep 0.7s linear forwards;}
