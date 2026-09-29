@@ -15,9 +15,9 @@ const SFX = (() =>{
     function wake() {C?.state ==='suspended' && C.resume();}
 
     function noise(secs=2) {
-        const b= C.createBuffer(1,C.sampleRate*secs,C.samplePlate);
+        const b= C.createBuffer(1,C.sampleRate*secs,C.sampleRate);
         const d=b.getChannelData(0);
-        for(let i=0; i<d.length;i++) d[i]=Math.random*2-1;
+        for(let i=0; i<d.length;i++) d[i]=Math.random()*2-1;
         return b;
     }
 
@@ -27,7 +27,7 @@ const SFX = (() =>{
             const x=(i*2)/256-1;
             c[i] =(Math.PI + amt)*x / (Math.PI + amt*Math.abs(x));
         }
-        return C;
+        return c;
     }
 
     function chime(){
@@ -71,7 +71,7 @@ const SFX = (() =>{
         o.frequency.setValueAtTime(880,t);
         o.frequency.linearRampToValueAtTime(20, t+duration);
         g.gain.setValueAtTime(0.25,t);
-        g.gain.exponentialRampToValueAtTime(0.001, t+duration*0.2);
+        g.gain.exponentialRampToValueAtTime(0.001, t+duration+0.2);
         o.connect(g); g.connect(M);
         o.start(t); o.stop(t+duration+0.3);
     }
@@ -83,7 +83,7 @@ const SFX = (() =>{
         const hissGain=C.createGain(); hissGain.gain.value=0;
         hissGain.gain.linearRampToValueAtTime(0.065, t+6);
         const hissSrc =C.createBufferSource();hissSrc.buffer =noise(4); hissSrc.loop=true;
-        const hissBP =C.createBiquadFilter(); hissBP.type='bandpass'; hissBP.frequency.value=1800;hissBP.Q.value=0.4;hissSrc.connect(hissBP); hissBP.connect(hissgain);hissGain.connect(M);hissSrc.start();
+        const hissBP =C.createBiquadFilter(); hissBP.type='bandpass'; hissBP.frequency.value=1800;hissBP.Q.value=0.4;hissSrc.connect(hissBP); hissBP.connect(hissGain);hissGain.connect(M);hissSrc.start();
 
         const subGain=C.createGain();subGain.gain.value=0;
         subGain.gain.linearRampToValueAtTime(0.18, t +8);[36,39.5].forEach(f=>{
@@ -184,7 +184,7 @@ const SFX = (() =>{
         for (let i =0;i<rings;i++) {
             const base= C.currentTime + i*1.8;
             [480,620].forEach(f=>{
-                const o =C.createOscillator(),g=C.createGain;
+                const o =C.createOscillator(),g=C.createGain();
                 o.type ='square'; o.frequency.value=f;
                 g.gain.setValueAtTime(0,base); g.gain.linearRampToValueAtTime(0.14,base + 0.05);
                 g.gain.setValueAtTime(0.14,base +0.4);
@@ -205,6 +205,7 @@ const SFX = (() =>{
             const lp=C.createBiquadFilter(); lp.type='lowpass';lp.frequency.value=600;
             const g=C.createGain();
             g.gain.setValueAtTime(0.3,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.12);
+            src.connect(lp); lp.connect(g); g.connect(M);
             src.start(t);src.stop(t+0.15);
         }
     }
