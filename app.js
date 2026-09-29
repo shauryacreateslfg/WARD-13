@@ -1,7 +1,7 @@
 const ward =(() => {
 
     const S = {
-        name:'',dob:'',reason:'',contact:'',history:'',
+        name:'',dob:'',reason:'',contact:'',relation:'',history:'',
         step:0,
         scaresLeft:3,
         ambientRunning: false,
@@ -81,12 +81,26 @@ const ward =(() => {
         { txt: `we noticed the name field was completed quickly. Please ensure it is accurate.`,type:'normal' , delay:5000},
         { txt: `your file has been flagged for overnight observation. Please remain in the building.`, type:'warning', delay:5000},
         { txt: `we located an existing record under your date of birth.Admission logged:[DATE].`,type:'warning',delay:6000 },
-        { txt: s =>`${S.contact} has already been contacted. They were informed you may not return.`, type:'danger' , delay: 5000},
+        { txt: s =>`${s.contact} has already been contacted. They were informed you may not return.`, type:'danger' , delay: 5000},
         { txt: `Hi there. Just a reminder to complete all fields. Have a good night.`, type:'danger' , delay:4000},
         { txt: `please stop trying to close the window. We can see when you try.`, type:'danger' , delay:3500},
-        { txt: s=> `${S.name}. Room 13B. Tonight.`, type:'danger' , delay:2500},
+        { txt: s=> `${s.name}. Room 13B. Tonight.`, type:'danger' , delay:2500},
     ];
     let titleIdx =0;
+    let nurseIdx = 0;
+    let nurseTimer = null;
+ 
+    const TITLES = [
+        `St. Maren's Hospital — Patient Intake`,
+        `St. Maren's Hospital — Patient Intake`,
+        `St. Maren's Hospital — Patient Intake`,
+        `you left a tab open`,
+        `St. Maren's Hospital — Patient Intake`,
+        `she can see this tab`,
+        `St. Maren's Hospital — Patient Intake`,
+        `WARD 13 — DO NOT CLOSE`,
+        `St. Maren's Hospital — Patient Intake`,
+    ];
 
     function begin() {
         SFX.boot(); SFX.chime();
@@ -316,7 +330,7 @@ const ward =(() => {
     
     function loadEndScreen() {
         $('end-head').textContent='Admission Complete';
-        $('end-body').textContent
+        $('end-body').textContent=
           `your records have been transferred to the permanent ward. ` + 
           `St. Maren's thanks you for your cooperation. `+
           `Pleasee do not attempt to contact your next of kin.`;
@@ -343,7 +357,7 @@ const ward =(() => {
     }
 
     function startNurseFeed(){
-        const feed= $('nruse-feed');
+        const feed= $('nurse-feed');
         if (!feed ||nurseTimer !== null) return;
         feed.classList.remove('hidden');
         queueNextNurse();
@@ -355,7 +369,7 @@ const ward =(() => {
     }
     
     function queueNextNurse(){
-        if(nurseIdx >= Nurse.length) return;
+        if(nurseIdx >= NURSE.length) return;
         const msg=NURSE[nurseIdx++];
         nurseTimer=setTimeout(() => {
             const txt =typeof msg.txt =='function'? msg.txt(S) : msg.txt;
@@ -366,7 +380,7 @@ const ward =(() => {
     }
 
     function appendNurse(text,type='normal'){
-        const msgs =$('nruse-msgs');
+        const msgs =$('nurse-msgs');
         if (!msgs) return ;
         const colours ={
             normal: 'border-[#aaa89a] text-[#555]',
@@ -402,7 +416,7 @@ const ward =(() => {
             if(r<0.3) SFX.heartbeat(1,Math.random() <0.4);
             else if (r<0.5) SFX.staticBurst(0.06,0.08);
             else if(r<0.6)SFX.whisper(0.08);
-        },1200 + Math.random()*8000);
+        },12000 + Math.random()*8000);
 
         setInterval(()=>{
             if(S.step<2) return;
@@ -420,7 +434,7 @@ const ward =(() => {
             ];
             document.title=options[Math.floor(Math.random()*options.length)];
             setTimeout(() => document.title =`St. Maren's Hospital - Patient Intake`,2500);
-        },2500+ Math.random()*15000);
+        },25000+ Math.random()*15000);
     }
 
     function scheduleJumpscare(delay){
@@ -509,8 +523,8 @@ const ward =(() => {
     function setProgress(pct,tier='normal'){
         const pbar=$('pbar');
         pbar.style.width =pct + '%';
-        if (tier === ' warning') pbar.style.background='#8b6a00';
-        if (tier === 'danger') pbar.style.background='#8b0000';
+        if (tier === 'warning') pbar.style.background='#8b6a00';
+        else if (tier === 'danger') pbar.style.background='#8b0000';
 
     }
 
@@ -571,8 +585,8 @@ document.addEventListener('DOMContentLoaded', ()=> {
     });
 
     const tick =() =>{
-        const t = new Date().toLocalTimeString('en-GB', {hour12: false});
-        const c1=$('clock'),c2=$('clock2');
+        const t = new Date().toLocaleTimeString('en-GB', {hour12: false});
+        const c1=$('cloc\..k'),c2=$('clock2');
         if(c1) c1.textContent=t;
         if(c2) c2.textContent=t;
     };
