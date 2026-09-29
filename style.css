@@ -87,7 +87,7 @@ body.dim-pulse{ animation: dim-pulse 3.5s ease-in-out infinite;}
     20%{border-color: #8b0000; color:#8b0000 ; letter-spacing: 0.04em;}
     40%{border-color: #8b0000; background-color: #fff5f5;}
     60%{border-color: #bbb; color: #1a1a1a; letter-spacing:  -0.02em ;}
-    20%{border-color:#555 ; background:#f5f5f5 ;}
+    80%{border-color:#555 ; background:#f5f5f5 ;}
 }
 .input-writhe{ animation: field-writhe 2.2s ease-in-out;}
 
@@ -136,7 +136,7 @@ body.dim-pulse{ animation: dim-pulse 3.5s ease-in-out infinite;}
 #js-art{ animation: js-slam 0.08s ease-out forwards;}
 
 @keyframes end-fade{
-    from {opacity:0; transform:translate(20px);}
+    from {opacity:0; transform:translateY(20px);}
     to {opacity:1; transform: none;}
 }
 .end-fade{ animation: end-fade 1.8s ease-out 0.6s both;}
@@ -150,7 +150,7 @@ body.dim-pulse{ animation: dim-pulse 3.5s ease-in-out infinite;}
     60% { clip-path:inset(25% 0 55% 0); transform:translate(-2px,0) skewX(1deg); }
     80% { clip-path:inset(80% 0 3% 0);  transform:translate(2px,0); }
 }
-.txt-glitch{animation: txt-glitch 0.35s steps(1 forwards);}
+.txt-glitch{animation: txt-glitch 0.35s steps(1) forwards;}
 
 @keyframes title-creep{
     0%,100% {letter-spacing: 0; filter: none;}
