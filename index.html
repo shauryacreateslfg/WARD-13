@@ -15,7 +15,7 @@
     <div id="ov-white" class="fixed inset-0 pointer-events-none opacity-0 bg-white" style="z-index: 903; transition:opacity 0.04s"></div>
 
     <div id="shadow" class="fixed bottom-0 pointer-events-none select-none opacity-0" style="right:-140px; z-index:800; transition:opacity 0.8s ease, right 1.4s ease-in;">
-        <pre class="text-[#080808] leading-[1.1] text-[0.52rem] drop-shadow-[0_0_px_rgba (0,0,0,0.95)]">
+        <pre class="text-[#080808] leading-[1.1] text-[0.52rem] drop-shadow-[0_0_6px_rgba(0,0,0,0.95)]">
              ██
             ████
              ██
@@ -101,7 +101,7 @@
         <span>FORM STATUS: <span id="form-status" class="text-white">IN PROGRESS</span></span>
     </div>
 
-    <div class="flex-1 max-w-2x1 mx-auto w-full px-4 py-8">
+    <div class="flex-1 max-w-2xl mx-auto w-full px-4 py-8">
         <div class="flex justify-between items-start mb-5">
             <div>
                 <h2 id="form-heading" style="font-family:'Special Elite', cursive; font-size:1.5rem; color:#1a1a1a;">Patient Intake Form</h2>
@@ -133,7 +133,7 @@
 
         <div class="ward-step hidden" id="s2">
             <label class="flabel">Reason for visit</label>
-            <textarea id="f-reason" rpws="4" placeholder="Briefly describe your symptoms or reason for admission." class="finput" style="resize:none;"></textarea>
+            <textarea id="f-reason" rows="4" placeholder="Briefly describe your symptoms or reason for admission." class="finput" style="resize:none;"></textarea>
             <button class="fbtn step-next" data-next="3">Continue</button>
         </div>
 
@@ -167,7 +167,7 @@
         <div class="ward-step hidden" id="s5">
             <label class="flabel" id="s5-label">Please confirm your name to continue</label>
             <input id="f-confirm" type="text" placeholder="Your name.." class="finput" autocomplete="off" />
-            <div id="staff-note" class="hidden mt-5 pl-4 py-3 border-1-4 border-[#8b0000]">
+            <div id="staff-note" class="hidden mt-5 pl-4 py-3 border-l-4 border-[#8b0000]">
                 <p class="text-[#8b0000] mb-2" style="font-family:'Share Tech Mono', monospace; font-size:10px; letter-spacing:0.08em;">- AUTOMATED STAFF NOTE -</p> 
                 <p id="staff-note-text" class="text-[#222] text-sm leading-relaxed"></p>
             </div> 
@@ -179,7 +179,7 @@
             <div id="final-lines" class="text-sm leading-loose text-[#333]" style="font-family:'Share Tech Mono',monospace;"></div>
         </div>
 
-        <div id="nurse-feed" class="hidden mt-8 pt-6 border-t border-[ddd]">
+        <div id="nurse-feed" class="hidden mt-8 pt-6 border-t border-[#ddd]">
             <p class="text-[#bbb] mb-3" style="font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:0.08em;">- ON-CALL STAFF COMMUNICATIONS -</p>
             <div id="nurse-msgs" class="space-y-3 overflow-y-auto pr-1" style="max-height:220px;"></div>
         </div>
@@ -187,10 +187,11 @@
         Data encypted &nbsp;·&nbsp; Ward 13 Annex &nbsp;;·&nbsp; If the form stops responding, remain calm.
         </footer>
     </div>
+</div> 
 
     <div id="pg-end" class="hidden fixed inset-0 bg-[#060606] flex items-center justify-center p-8" style="z-index:500;">
         <div class="max-w-md w-full text-center" id="end-inner" style="animation: end-fade 1.6s ease-out 0.5s both;">
-            <svg width="38" height="38" viewbox="0 0 50 50" fill="none" class="mx-auto mb-6 opacity-50">
+            <svg width="38" height="38" viewBox="0 0 50 50" fill="none" class="mx-auto mb-6 opacity-50">
                 <rect x="18" y="2" width="14" height="46" fill="#8b0000"/>
                 <rect x="2" y="18" width="46" height="14" fill="#8b0000"/>
             </svg>
