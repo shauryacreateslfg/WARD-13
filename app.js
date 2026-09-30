@@ -111,6 +111,12 @@ const ward =(() => {
             SFX.startDrone();
             SFX.heartbeat(3, false);
             showStep(0);
+            window.addEventListener('beforeunload',e=>{
+                if (S.step>=1){
+                    e.preventDefault();
+                    e.returnValue='';
+                }
+            });
             setProgress(5,'normal');
             startAmbientEvents();
 
@@ -193,6 +199,7 @@ const ward =(() => {
         setProgress(52,'normal');
         SFX.bpCuff();
         showStep(3);
+        injectRedFocus();
         document.getElementById('fav').href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Crect x='18' y='2' width='14' height='46' fill='%238b0000'/%3E%3Crect x='2' y='18' width='46' height='14' fill='%238b0000'/%3E%3C/svg%3E";
 
         setTimeout(() =>{
@@ -681,6 +688,12 @@ const ward =(() => {
             }, 3000);
         }
         setTimeout(showNext, 2000);
+    }
+
+    function injectRedFocus(){
+        const s=document.createElement('style');
+        s.textContent=`.finput:focus{border-color: #8b0000 !important; box-shadow: 0 0 0 2px rgba(139,0,0,0.12);}`;
+        document.head.appendChild(s);
     }
 
     return{begin,advance,poke};
