@@ -452,6 +452,17 @@ const ward =(() => {
             setTimeout(() => document.title =`St. Maren's Hospital - Patient Intake`,2500);
         },25000+ Math.random()*15000);
         scheduleAmbientPhotoScare();
+
+        let keyCount=0;
+        document.addEventListener('keydown',() =>{
+            if (S.step<1) return;
+            keyCount++;
+            if (keyCount%7 === 0 && S.step>=3){
+                SFX.creak();
+            } else{
+                SFX.staticBurst(0.03,0.015);
+            }
+        });
     }
 
     function scheduleAmbientPhotoScare(){
