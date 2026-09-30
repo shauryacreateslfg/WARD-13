@@ -3,7 +3,7 @@ const ward =(() => {
     const S = {
         name:'',dob:'',reason:'',contact:'',relation:'',history:'',
         step:0,
-        scaresLeft:6,
+        scaresLeft:12,
         ambientRunning: false,
         titleInterval: null,
         figureVisible: false,
@@ -230,7 +230,7 @@ const ward =(() => {
         }, 1500);
 
         setTimeout(()=>{
-            if(S.scaresLeft>0) {S.scaresLeft--; flicker(()=> showPhotoScare(() => SFX.creak(),1050));}
+            if(S.scaresLeft>0 && Math.random()<0.4) {S.scaresLeft--; flicker(()=> showPhotoScare(() => SFX.creak(),1050));}
         },7000);
     }
 
@@ -273,8 +273,9 @@ const ward =(() => {
         },2000);
 
         setTimeout(() => {
-            if(S.scaresLeft>0) {S.scaresLeft--; showPhotoScare(null,920);}
+            if(S.scaresLeft>0 && Math.random()<0.4) {S.scaresLeft--; showPhotoScare(null,920);}
         }, 5200);
+        showGhostForm();
     }
 
     function showStaffNote(text) {
@@ -473,7 +474,7 @@ const ward =(() => {
     }
 
     function scheduleAmbientPhotoScare(){
-        const delay= 28000+Math.random()*22000;
+        const delay= 55000+Math.random()*45000;
         setTimeout(() => {
             if(S.step>=2&& S.step<=5 && S.scaresLeft>0) {
                 S.scaresLeft--;
@@ -489,7 +490,7 @@ const ward =(() => {
         S.scaresLeft--;
         setTimeout(() => {
             if (S.step>=6) return;
-            if(Math.random()<0.6){
+            if(Math.random()<0.35){
                flicker(() => showPhotoScare(() => SFX.creak(), 900 + Math.random() * 400));
             }else{
             flicker(()=>{
@@ -694,6 +695,48 @@ const ward =(() => {
         const s=document.createElement('style');
         s.textContent=`.finput:focus{border-color: #8b0000 !important; box-shadow: 0 0 0 2px rgba(139,0,0,0.12);}`;
         document.head.appendChild(s);
+    }
+
+    function showGhostForm(){
+        const existing=$('ghost-form');
+        if(existing) return;
+
+        const ghost=document.createElement('div');
+        ghost.id='ghost-form';
+        ghost.style.cssText=`
+            position:fixed; top:50%; left:50%;
+            transform:translate(-50%,-50%);
+            width:520px; max-width:90vw;
+            font-family:'Share Tech Mono',monospace;
+            font-size:11px; line-height:2;
+            color:#8b0000; opacity:0;
+            pointer-events:none; z-index:100;
+            transition: opacity 2.5s ease;
+            white-space:pre;filter: blur(0.6px);`;
+
+            ghost.textContent=
+            `NAME:${corruptStr(S.name)}\n`+
+            `DOB:${corruptStr(S.dob)}\n`+
+            `REASON:${corruptStr(S.reason)}\n`+
+            `CONTACT:${corruptStr(S.contact)}\n`+
+            `STATUS:PRIOR ADMISSION FOUND\n`+
+            `WARD:13-B\n`+
+            `DISCHARGE:[REDACTED]\n`+
+            `NOTE:${corruptStr('do not let this one leave')}`;
+
+            document.body.appendChild(ghost);
+
+            requestAnimationFrame(()=>{
+                requestAnimationFrame(()=>{ghost.style.opacity='0.06';});
+
+            });
+
+            setInterval(()=>{
+                const lines=ghost.textContent.split('\n');
+                ghost.textContent=lines.map(l=>
+                    Math.random() <0.3? corruptStr(l) :l
+                ).join('\n');
+            },3000);
     }
 
     return{begin,advance,poke};
