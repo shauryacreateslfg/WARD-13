@@ -192,6 +192,8 @@ const ward =(() => {
         setProgress(52,'normal');
         SFX.bpCuff();
         showStep(3);
+        document.getElementById('fav').href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Crect x='18' y='2' width='14' height='46' fill='%238b0000'/%3E%3Crect x='2' y='18' width='46' height='14' fill='%238b0000'/%3E%3C/svg%3E";
+
         setTimeout(() =>{
             const hint=$('contact-hint');
             if (hint) typeCorruptThenFix(hint,`They will be told you can't come home.`);
@@ -227,6 +229,8 @@ const ward =(() => {
     function step5Horror() {
         setProgress(82,'danger');
         showStep(5);
+        document.getElementById('fav').href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Crect x='18' y='2' width='14' height='46' fill='%23111'/%3E%3Crect x='2' y='18' width='46' height='14' fill='%23111'/%3E%3C/svg%3E";
+
         body.classList.add('dim-pulse');
         $('ov-vignette').className = 'fixed inset-0 z-[901] pointer-events-none vignette-danger transition-all duration-1000';
        
