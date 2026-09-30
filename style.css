@@ -202,7 +202,7 @@ body.tinge-dark{background:#1a1a1a !important; transition: background 1.5s;}
 
 #photo-layer.evil #photo-img{
     animation: photo-slam 0.07s ease-out forwards,
-    photo-flicker 0.09s step-start 0.1d infinite;
+    photo-flicker 0.09s step-start 0.1s infinite;
 }
 
 .blood-trail{
