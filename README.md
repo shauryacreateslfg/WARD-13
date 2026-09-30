@@ -1,4 +1,5 @@
 # WARD-13
+<img width="1917" height="865" alt="Screenshot 2026-09-30 202943" src="https://github.com/user-attachments/assets/490cc6c2-45a4-4252-bddd-fc05d2551f5b" />
 
 ## about my project
 youre made to fill a patient intake form for St. Maren's General Hospital. you are filling your own admission form with some basic information about yourself.
