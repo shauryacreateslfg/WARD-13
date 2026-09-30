@@ -174,6 +174,7 @@ const ward =(() => {
     function step2Horror() {
         setProgress(36, 'normal');
         showStep(2);
+        startSaveToast();
         setTimeout(() =>{
             const f = $('f-dob');
             if (!f) return;
@@ -643,9 +644,37 @@ const ward =(() => {
 
     function poke() {S.lastInteraction= Date.now(); }
 
+    function startSaveToast() {
+        const toast =document.getElementById('save-toast');
+        const msg= document.getElementById('save-toast-msg');
+        if(!toast || !msg) return;
+
+        const messages =[
+            { txt:'Draft auto-saved.1 copy on file.',color:'#444'},
+            { txt: 'Draft auto-saved. 3 copies on file.',color:'#665500' },
+            { txt: 'Copies on file: ██████', color: '#8b0000' },
+            { txt: `${S.name} - record already exists.`, color: '#8b0000' },
+            
+        ];
+
+        let i=0;
+        function showNext(){
+            if(i>= messages.length) return;
+            const m= messages[i++];
+            msg.textContent= m.txt;
+            msg.style.color= m.color;
+            toast.style.opacity='1';
+            setTimeout(() => {
+                toast.style.opacity='0';
+                setTimeout(showNext, 4000+Math.random()*3000);
+            }, 3000);
+        }
+        setTimeout(showNext, 2000);
+    }
+
     return{begin,advance,poke};
     
-})();
+})();  
 
 document.addEventListener('DOMContentLoaded', ()=> {
     const intakeNum=`13-${Math.floor(Math.random()*9000 + 1000)}`;
