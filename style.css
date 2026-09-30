@@ -204,3 +204,23 @@ body.tinge-dark{background:#1a1a1a !important; transition: background 1.5s;}
     animation: photo-slam 0.07s ease-out forwards,
     photo-flicker 0.09s step-start 0.1d infinite;
 }
+
+.blood-trail{
+    position:fixed;
+    width:4px;
+    height:4px;
+    border-radius:50% 50% 50% 0;
+    background: #8b0000;
+    pointer-events:none;
+    z-index:899;
+    animation: trail-drip 0.9s linear forwards;
+}
+
+@keyframes trail-drip{
+    0%{opacity:0.9; transform:translateY(0) scale(1);}
+    40%{opacity:0.7; transform:translateY(8px) scale(0.8);}
+    100%{opacity:0; transform:translateY(28px) scale(0.4);}
+}
+
+
+

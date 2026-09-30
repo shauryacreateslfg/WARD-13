@@ -103,6 +103,7 @@ const ward =(() => {
     ];
 
     function begin() {
+        window._wardStarted=true;
         SFX.boot(); SFX.chime();
         flicker(() => {
             $('pg-landing').classList.add('hidden');
@@ -671,7 +672,18 @@ document.addEventListener('DOMContentLoaded', ()=> {
         }
         ward.poke();
     });
-    document.addEventListener('mousemove', ()=> ward.poke());
+    document.addEventListener('mousemove', (e)=> {
+        if(!window._wardStarted) return;
+        if(Math.random()>0.35) return;
+        const dot=document.createElement('div');
+        dot.className='blood-trail';
+        dot.style.left= e.clientX + (Math.random()*6 -3) +'px';
+        dot.style.top= e.clientY + (Math.random()*6 -3) +'px';
+        dot.style.animationDuration= (0.6 + Math.random()*0.8) + 's';
+        document.body.appendChild(dot);
+        setTimeout(() => dot.remove(), 1400);
+    });
+
     document.addEventListener('click', ()=> ward.poke());
 
     document.addEventListener('visibilitychange', ()=> {
