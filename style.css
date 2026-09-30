@@ -164,3 +164,43 @@ body.dim-pulse{ animation: dim-pulse 3.5s ease-in-out infinite;}
 
 body.tinge-red{ background: #ede0e0 !important;transition: background 2s;}
 body.tinge-dark{background:#1a1a1a !important; transition: background 1.5s;}
+
+#photo-layer{
+    display: none;
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    z-index:9998;
+    background: #000;
+    justify-content: center;
+    align-items: center;
+}
+
+#photo-layer.active{
+    display: flex;
+}
+
+@keyframes photo-slam{
+    from{transform:scale(0.15) rotate(-10deg); opacity:0;}
+    to {transform:scale(1) rotate(0deg); opacity:1;}
+}
+#photo-img{
+    width: clamp(260px,65vw,760px);
+    height:auto;
+    object-fit:contain;
+    animation:photo-slam .07s ease-out forwards;
+    filter: contrast(1.4) brightness(0.85);
+}
+
+@keyframes photo-flicker{
+    0%,100% {opacity:1; filter:contrast(1.4) brightness(0.85);}
+    45% {opacity:0.4; filter:contrast(2) brightness(1.5) invert(1);}
+    55% {opacity:0.9; filter:contrast(1.8) hue-rotate(180deg);}
+}
+
+#photo-layer.evil #photo-img{
+    animation: photo-slam 0.07s ease-out forwards,
+    photo-flicker 0.09s step-start 0.1d infinite;
+}
